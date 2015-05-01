@@ -62,7 +62,7 @@
 
 			<div ng-repeat="ds in drumSamples" class="gridRow row">
 				<div class="small-1 columns">
-					<span class="secondary label round width2">{{ds.name}}</span>
+					<span ng-class="{label: true, alert: drumGrid[$index][currentTick] && play, secondary: !(drumGrid[$index][currentTick] && play), round: true,  width2: true}" >{{ds.name}}</span>
 				</div>	
 				<div class="small-1 columns">
 					<input type="range" ng-model="drumSamples[$index].filterFrequency" min="200" max="7000" class="width1" /> 

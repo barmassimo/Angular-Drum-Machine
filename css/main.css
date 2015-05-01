@@ -18,24 +18,24 @@
 }
 
 .activeKey {
-	background-color:#BBB!important;
+	background-color:#F63!important;
 }
 
 .whiteKey {
-	background-color:#FFE;
+	background-color:#FFFFFD;
 	color:#000;
 }
 .whiteKey:hover {
-	background-color:#BBB;
+	background-color:#F63;
 }
 
 .blackKey {
-	background-color:#000;
+	background-color:#222;
 	color:#FFE;
 }
 
 .blackKey:hover {
-	background-color:#BBB;
+	background-color:#F63;
 }
 
 .width1 {
@@ -53,3 +53,8 @@
 .width4 {
 	min-width: 200px;
 }		
+
+/* override faoundation alert color */
+.alert {
+    background-color: #F63!important;
+}

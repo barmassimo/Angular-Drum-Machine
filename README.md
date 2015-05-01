@@ -19,7 +19,7 @@ This is due to Chrome limitations on XMLHttpRequest to local files.
 To fix this, you can:
 
 * Use another browser like Mozilla, OR
-* Use a local web server, for example: IIS / IIS Express, Apache, Node.js, nginx, Gunicorn, Python http.server module, ...) OR
+* Use a local web server, for example: IIS / IIS Express, Apache, Node.js, nginx, Gunicorn, ... OR
 * Use Chrome with local web security disabled (option --allow-file-access-from-files)
 
 Copyright (C) 2015, [Massimo Barbieri](http://www.massimobarbieri.it)

@@ -1,3 +1,5 @@
+"use strict";
+
 minidm.controller("minidmCtrl", function ($scope, hotkeys) {
 	
 	// properties & configuration
@@ -137,7 +139,7 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
 		}
 		return v;
 	};
-		
+
 	// private functions and properties
 
 	var notes = ["C", "C#", "D", "D#",  "E",  "F",  "F#",  "G",  "G#", "A", "A#", "B"];		

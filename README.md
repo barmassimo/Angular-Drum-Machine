@@ -3,7 +3,6 @@
 A drum machine entirely made in HTML5, AngularJS and Foundation. 
 A little fun without server side logic.
 
-
 ## Some notes
 
 * MS Explorer doesn't supports audio at the moment. Please try with Mozilla or Chrome, or another serious browser.

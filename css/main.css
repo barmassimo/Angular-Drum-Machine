@@ -1,0 +1,55 @@
+.smallText {
+	color: #888;
+}
+
+.gridRow input {
+	margin: 6px;
+}
+
+.key a {
+	display: inline-block;
+	width: 16px;
+	height: 50px;
+	padding: 30px 0 0 0;
+	border: 1px solid #000;
+	text-decoration: none;
+	text-align: center;
+	font-size: small;
+}
+
+.activeKey {
+	background-color:#BBB!important;
+}
+
+.whiteKey {
+	background-color:#FFE;
+	color:#000;
+}
+.whiteKey:hover {
+	background-color:#BBB;
+}
+
+.blackKey {
+	background-color:#000;
+	color:#FFE;
+}
+
+.blackKey:hover {
+	background-color:#BBB;
+}
+
+.width1 {
+	width: 50px;
+}
+
+.width2 {
+	min-width: 80px;
+}		
+
+.width3 {
+	min-width: 150px;
+}
+
+.width4 {
+	min-width: 200px;
+}		

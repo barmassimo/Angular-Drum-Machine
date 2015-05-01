@@ -1,0 +1,135 @@
+﻿<!DOCTYPE HTML>
+<html ng-app="minidm">
+
+	<head>
+		<link href="lib/foundation/foundation.min.css" rel="stylesheet" type="text/css" />
+		<link href="css/main.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body ng-controller="minidmCtrl">
+		<div class="container">
+		
+			<div class="row" >&nbsp;</div>
+			
+			<div class="row">	
+				<div class="small-12 columns">
+					<h1>angular drum machine</h1>
+					<span class="smallText">
+						A drum machine entirely made in HTML5, AngularJS and Foundation.<br/>
+						A little fun without server side logic.
+					</span>
+				</div>			
+			</div>
+			
+			<div class="row"><hr/></div>
+			
+			<div class="row">
+				<div class="small-2 columns">
+					<a ng-click="togglePlay()" class="button round width3" >play&nbsp;/&nbsp;stop</a>
+				</div>		
+				<div class="small-4 columns">
+					<ul class="button-group round">
+						<li><a ng-click="randomize()" class="button width3">randomize</a></li>
+						<li><a ng-click="clear()" class="button width3">clear</a></li>
+					</ul>
+				</div>
+				<div class="small-2 columns end">
+					<span class="secondary label round width4">tempo</span> 
+					<input class="width4" ng-model="tempo" type="number" min="0" max="400" />
+				</div>		
+			</div>
+			
+			<div class="row gridRow" >
+				<div class="small-1 columns small-offset-1">
+					<span class="secondary label round">filter freq.</span>
+				</div>
+				<div class="small-1 columns">
+					<span class="secondary label round">resonance</span>
+				</div>			
+				<div class="small-9 columns">
+					<span ng-repeat="n in range(0, 16)">
+						<input type="radio" ng-checked="n==currentTick" disabled />
+						<span ng-if="n % 4 == 3 && n!=15">-</span>
+					</span>  	
+				</div>
+			</div>	
+
+			<div ng-repeat="ds in drumSamples" class="gridRow row">
+				<div class="small-1 columns">
+					<span class="secondary label round width2">{{ds.name}}</span>
+				</div>	
+				<div class="small-1 columns">
+					<input type="range" ng-model="drumSamples[$index].filterFrequency" min="200" max="7000" class="width1" /> 
+				</div>
+				<div class="small-1 columns">
+					<input type="range" ng-model="drumSamples[$index].filterQ" min="0" max="40" class="width1" /> 
+				</div>
+				<div class="small-9 columns">
+					<span ng-repeat="n in range(0, 16)">
+						<input type="checkbox" ng-model="drumGrid[$parent.$index][n]" />
+						<span ng-if="n % 4 == 3 && n!=15">-</span>
+					</span>  
+				</div>	
+			</div>	
+			
+			<div class="row">
+				<div class="small-12 columns smallText">
+				<br/>
+				This is a classic, 16 step pattern grid. For each sample, you can change the filter frequency & resonance. 
+				<br/>
+				Create your pattern or, if you feel lazy, jusy press the "randomize" button and enjoy!
+				</div>
+			</div>			
+
+			<div class="row"><hr/></div>
+					
+			<div class="row"> 
+				<div class="small-1 columns small-offset-1">
+					<span class="secondary label round">filter freq.</span> 
+				</div>
+				<div class="small-1 columns end">
+					<span class="secondary label round">resonance</span> 
+				</div>				
+			</div>
+			
+			<div class="row"> 
+				<div class="small-1 columns">
+					<span class="secondary label round width2">lo-fi synth</span>
+				</div>
+				<div class="small-1 columns">
+					<input type="range" ng-model="filterFrequency" min="200" max="7000" class="width1" />
+				</div>	
+				<div class="small-1 columns">
+					<input type="range" ng-model="filterQ" min="0" max="40" class="width1" />
+				</div>				
+				<div class="small-9 columns key">
+					<a ng-repeat="n in range(0, 29)" ng-click="playNote(n)" 
+					ng-class="{whiteKey: isWhiteKey(n), blackKey: isBlackKey(n), activeKey: noteKeysActive[n]}" href="#" >{{noteKeys[n]}}</a>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="small-12 columns smallText">
+				<br/>
+				This is a 8 bit style, lo-fi synth. Click on the little piano-keys or use the keyboard to play.
+				<br/>
+				Oh, and there is a filter too. :-)
+				</div>
+			</div>				
+			
+			<div class="row"><hr/></div>
+			
+			<div class="row">
+				<div class="small-2 columns end">
+					<a href="http://www.massimobarbieri.it"><img src="img/logo.jpg"></a>
+				</div>			
+			</div>
+		</div> <!-- container -->	
+
+		<script src="lib/angular/angular.min.js"></script>
+		<script src="lib/angular/hotkeys.min.js"></script>
+		<script src="lib/buffer-loader/buffer-loader.js"></script>
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script> 
+	</body>
+</html>

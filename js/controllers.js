@@ -186,11 +186,7 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         $scope.context = createAudioContext();
         
         // wav files
-        var drumSamplesFiles = [];
-        
-        for (var i=0; i<$scope.drumSamples.length; i++) {
-            drumSamplesFiles.push($scope.drumSamples[i].file);
-        }
+        var drumSamplesFiles = $scope.drumSamples.map(function(ds) {return ds.file;});
 
         var bufferLoader = new BufferLoader(
             $scope.context,

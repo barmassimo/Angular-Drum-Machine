@@ -46,7 +46,19 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         }
     };        
     
-    $scope.playWav = function(buffer, filterFrequency, q) {
+    $scope.checkAndPlayWav = function(index, tick, onlyWhenStopped) {
+        if (onlyWhenStopped && $scope.play)
+            return;
+            
+        if ($scope.drumGrid[index][tick])
+            $scope.playWav(index);
+    };
+    
+    $scope.playWav = function(index) {
+        var buffer = $scope.bufferList[index];
+        var filterFrequency = $scope.drumSamples[index].filterFrequency;
+        var q = $scope.drumSamples[index].filterQ;
+    
         var source1 = $scope.context.createBufferSource();
         source1.buffer = buffer;
         
@@ -159,8 +171,7 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         setTimeout(tick, bpmToMillisec($scope.tempo));
 
         for (var i=0; i<$scope.drumSamples.length; i++) {
-            if ($scope.drumGrid[i][$scope.currentTick])
-                $scope.playWav($scope.bufferList[i], $scope.drumSamples[i].filterFrequency, $scope.drumSamples[i].filterQ);
+                $scope.checkAndPlayWav(i, $scope.currentTick);
         }
 
         $scope.$apply(function() {

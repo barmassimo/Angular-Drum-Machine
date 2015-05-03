@@ -70,7 +70,7 @@
 				</div>
 				<div class="small-9 columns">
 					<span ng-repeat="n in range(0, 16)">
-						<input type="checkbox" ng-model="drumGrid[$parent.$index][n]" />
+						<input type="checkbox" ng-click="checkAndPlayWav($parent.$index, n, true)" ng-model="drumGrid[$parent.$index][n]" />
 						<span ng-if="n % 4 == 3 && n!=15">-</span>
 					</span>  
 				</div>	

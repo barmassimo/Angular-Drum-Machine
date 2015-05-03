@@ -8,7 +8,7 @@ Composed by a classic, 16 step pattern grid with percussive wav samples, and an 
 
 [Live demo!](http://www.massimobarbieri.it/AngularDrumMachine)
 
-Browser support: MS Explorer does not support audio at the moment. Please try with Mozilla, Chrome, or another browser.
+Browser support: MS Internet Explorer does not support audio at the moment: please try with Mozilla, Chrome, or another browser.
 
 ## A note on local use
 

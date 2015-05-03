@@ -30,19 +30,17 @@
 			<div class="row"><hr/></div>
 			
 			<div class="row">
-				<div class="small-2 columns">
+				<div class="small-3 columns">
 					<a ng-click="togglePlay()" class="button round width3" >play&nbsp;/&nbsp;stop</a>
-				</div>		
-				<div class="small-4 columns">
-					<ul class="button-group round">
-						<li><a ng-click="randomize()" class="button width3">randomize</a></li>
-						<li><a ng-click="clear()" class="button width3">clear</a></li>
-					</ul>
-				</div>
+				</div>               
+				<div class="small-2 columns">
+					<span class="secondary label round width2">tempo</span> 
+					<input class="width2" ng-model="tempo" type="number" min="0" max="400" />
+				</div>	                
 				<div class="small-2 columns end">
-					<span class="secondary label round width4">tempo</span> 
-					<input class="width4" ng-model="tempo" type="number" min="0" max="400" />
-				</div>		
+                    <a ng-click="randomize()" class="button round tiny width3" style="height:30px; margin-bottom:1px">randomize</a>
+                    <a ng-click="clear()" class="button round tiny width3" style="height:30px; margin-top:0">clear</a>
+				</div>                
 			</div>
 			
 			<div class="row gridRow" >

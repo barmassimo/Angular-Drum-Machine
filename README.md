@@ -1,10 +1,12 @@
 # Angular-Drum-Machine
 
-A drum machine entirely made in HTML5, AngularJS and Foundation. 
+A drum machine entirely made in HTML5, AngularJS and Foundation.
 
 A little fun without server side logic.
 
 Composed by a classic, 16 step pattern grid with percussive wav samples, and an 8 bit style, lo-fi synth driven by 2 oscillators.
+
+_NEW: MIDI support on Chrome!_
 
 [Live demo!](http://www.massimobarbieri.it/AngularDrumMachine)
 

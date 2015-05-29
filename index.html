@@ -98,7 +98,7 @@
 					<input type="range" ng-model="filterQ" min="0" max="40" class="width1" />
 				</div>				
 				<div class="small-9 columns key">
-					<a ng-repeat="n in range(0, 29)" ng-click="playNote(n)" 
+					<a ng-repeat="n in range(0, 29)" ng-click="playNote(n, 127, true)" 
 					ng-class="{whiteKey: isWhiteKey(n), blackKey: isBlackKey(n), activeKey: noteKeysActive[n]}" href="#" >{{noteKeys[n]}}</a>
 				</div>
 			</div>			
@@ -113,12 +113,14 @@
                         Create your pattern or, if you feel lazy, just press the "randomize" button and enjoy!
                     </p>
                     <p>
-                        The bottom half is an 8 bit style, lo-fi synth. Click on the little piano-keys or use the keyboard to play. 
+                        The bottom half is an 8 bit style, lo-fi synth. Click on the little piano-keys or use the computer keyboard to play. 
                         <br/>
                         Oh, and there is a filter too. :-)
+                        <br/>
+                        <strong>NEW: on Chrome, you can also use a MIDI keyboard connected to your computer - and you really should :-)</strong>
                     </p>
                     <p>
-                        A note about browser support: MS Internet Explorer does not support audio at the moment: please try with Mozilla, Chrome, or another browser.
+                        A note about browser support: MS Internet Explorer does not support audio at the moment: please try with Mozilla, Chrome, or another browser. <br/>
                     </p>
 				</div>
 			</div>

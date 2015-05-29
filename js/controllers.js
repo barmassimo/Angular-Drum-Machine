@@ -1,7 +1,7 @@
 "use strict";
 
 minidm.controller("minidmCtrl", function ($scope, hotkeys) {
-    
+
     // properties & configuration
 
     $scope.play = false;
@@ -9,9 +9,10 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
     $scope.currentTick = 0;
     
     $scope.filterFrequency = 5000;
-    $scope.filterQ = 0;
+    $scope.filterQ = 5;
     
     $scope.drumGrid = null;    
+    $scope.activeNotes = {};
     
     $scope.drumSamples = [
       {file: "./samples/bassdrum.wav",   name: "bassdrum",   fitlerFrequency: $scope.filterFrequency, filterQ: $scope.filterQ}, 
@@ -81,9 +82,10 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         source1.start(0);
     };    
     
-    $scope.playNote = function(index) {
+    $scope.playNote = function(index, velocity, autoNoteOff) {
     
         var n = getNoteFromKey(index);
+        velocity = velocity || 127;
     
         var filter = $scope.context.createBiquadFilter();
         filter.type = "lowpass"; // Low-pass filter.
@@ -95,7 +97,8 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         osc.type = "square";
         osc2.type = "square";
         var gain = $scope.context.createGain(); // Create gain node
-        gain.gain.value=0.6;
+        gain.gain.value = 0.3*(velocity/127);
+
         osc.connect(gain);
         osc2.connect(gain);
         
@@ -111,13 +114,13 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         osc2.start(0);
         
         // var i1 = setInterval(function(){ osc.frequency.value += 0.5;}, 10);
-        var i2 = setInterval(function(){ if (gain.gain.value>0)  { gain.gain.value -= 0.007; } else { gain.gain.value=0;} }, 5);
-        setTimeout(function() {
-            osc.stop();
-            osc2.stop();
-            //clearInterval(i1);
-            clearInterval(i2);
-        }, 1500);
+        
+        if (autoNoteOff) {    
+            stopNote(osc, osc2, gain);
+        }
+        else {
+            $scope.activeNotes[index] = { oscillator1: osc, oscillator2: osc2, gain: gain, filter: filter };
+        }
     };    
 
     $scope.togglePlay = function() {
@@ -222,11 +225,14 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
         
         // create a random pattern
         $scope.randomize();
+        
+        // init MIDI input devices, if present
+        initMidi();
     }  
     
     function createPlayNoteFunction(index) {
         return function() {
-            $scope.playNote(index);  
+            $scope.playNote(index, 127, true);  
             $scope.noteKeysActive[index] = true;
             setTimeout(createStopNoteFunction(index), 400);
         };
@@ -240,9 +246,83 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
     
     function getNoteFromKey(index) {
         return index-12*4+3;
-    }       
+    }
+
+    // MIDI implementation
+    function initMidi() {
+        if (!navigator.requestMIDIAccess) {
+            console.log("No MIDI support.");
+            return; // no support
+        }
+            
+        navigator.requestMIDIAccess().then(initMidiOK, initMidiKO);
+    }
+        
+    function initMidiOK(midi) {
+        var midiAccess = midi;
+
+        var inputs=midiAccess.inputs.values();
+      
+        for (var input = inputs.next(); input && !input.done; input = inputs.next()) {
+            input.value.onmidimessage = onMidiMessage;
+        }
+    }
+
+    function initMidiKO() {
+      console.log("Something went went wrong with MIDI initialization, I'm soooo sorry.");
+    }
+  
+    function onMidiMessage(event) {
+        // Mask off the lower nibble (MIDI channel, which we don't care about)
+        switch (event.data[0] & 0xf0) {
+            
+            case 0x90: // note on
+                if (event.data[2]!==0) {  // if velocity != 0, this is a note-on message
+                    noteOn(event.data[1], event.data[2]);
+                }
+                break;
+                
+            case 0x80: // note off
+                noteOff(event.data[1]);
+                break;
+                
+            case 0xB0: // control change
+                if (event.data[1]==1) // modulation wheel
+                    $scope.$apply(function() {
+                        $scope.filterFrequency = 200+(event.data[2]*(7000-200)/127);
+                        
+                        for (var note in $scope.activeNotes) {
+                            if ($scope.activeNotes.hasOwnProperty(note))
+                                $scope.activeNotes[note].filter.frequency.value = $scope.filterFrequency;
+                        }
+                    });
+                break;                   
+        }
+    }
+    
+    function noteOn(note, velocity) {
+        $scope.playNote(note-48, velocity, false);
+    }
+    
+    function noteOff(note) {
+        var noteData = $scope.activeNotes[note-48];
+        stopNote(noteData.oscillator1, noteData.oscillator2, noteData.gain);
+    }
+    
+    function stopNote(oscillator1, oscillator2, gain) {
+        var i2 = setInterval(function(){ 
+            if (gain.gain.value>0) { 
+                gain.gain.value -= 0.005; 
+            } 
+            else { 
+                gain.gain.value=0; 
+                oscillator1.stop();  
+                oscillator2.stop(); 
+                clearInterval(i2);
+            } 
+        }, 5);
+    }    
 
     // let's go!
-    
     init();
 });

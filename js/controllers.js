@@ -119,6 +119,12 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
             stopNote(osc, osc2, gain);
         }
         else {
+            var noteData = $scope.activeNotes[index];
+            if (noteData) {
+                delete $scope.activeNotes[index];
+                stopNote(noteData.oscillator1, noteData.oscillator2, noteData.gain);
+            }
+
             $scope.activeNotes[index] = { oscillator1: osc, oscillator2: osc2, gain: gain, filter: filter };
         }
     };    
@@ -306,6 +312,11 @@ minidm.controller("minidmCtrl", function ($scope, hotkeys) {
     
     function noteOff(note) {
         var noteData = $scope.activeNotes[note-48];
+        
+        if (!noteData) 
+            return;
+        
+        delete $scope.activeNotes[note-48];
         stopNote(noteData.oscillator1, noteData.oscillator2, noteData.gain);
     }
     

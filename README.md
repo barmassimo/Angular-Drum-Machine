@@ -10,7 +10,7 @@ _NEW: MIDI support on Chrome!_
 
 [Live demo!](http://www.massimobarbieri.it/AngularDrumMachine)
 
-Browser support: MS Internet Explorer does not support audio at the moment: please try with Mozilla, Chrome, or another browser.
+Browser support: MS Internet Explorer does not support audio: please try with MS Edge, Mozilla, Chrome, Safari or another browser.
 
 ## A note on local use
 
